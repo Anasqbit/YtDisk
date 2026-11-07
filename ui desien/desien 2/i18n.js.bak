@@ -1,0 +1,103 @@
+/* Preview-only translations and in-browser sample data.
+   The real YtDisk i18n.js and native pywebview API were not supplied.
+   Do not copy this file into the application. */
+const I18N = {
+  ar: {
+    tagline: 'حوّل ملفاتك إلى فيديو واستعدها متى شئت', lang_btn: 'EN',
+    tab_encode: 'تحويل إلى فيديو', tab_restore: 'استعادة الملفات',
+    enc_file_h: 'ملف للتحويل', drop_file: 'اسحب ملفك وأفلته هنا', drop_video: 'اسحب ملف الفيديو وأفلته هنا',
+    or: 'أو', browse: 'استعراض الملفات', change: 'تغيير', remove: 'إزالة', out_h: 'ملف الفيديو الناتج', out_dir: 'مجلد الحفظ',
+    sec_pw: 'الأمان والإعدادات', pw_toggle: 'حماية الملف بكلمة مرور', pw_ph: 'أدخل كلمة المرور', show_hide: 'إظهار / إخفاء',
+    pw_hint_enc: 'ستحتاج إلى كلمة المرور نفسها عند الاستعادة.', pw_hint_rs: 'أدخل كلمة المرور المستخدمة عند التحويل.',
+    adv_h: 'إعدادات متقدمة', block_l: 'حجم الكتلة', block_h: 'حجم البيانات لكل كتلة.', nsym_l: 'تصحيح الأخطاء', nsym_h: 'زيادة التصحيح تحسّن مقاومة التلف.',
+    btn_encode: 'بدء التحويل', btn_restore: 'بدء الاستعادة', enc_note: 'تتم المعالجة محلياً على جهازك.',
+    src_h: 'مصدر الفيديو', src_url: 'رابط فيديو', src_file: 'ملف محلي', url_ph: 'https://...', paste: 'لصق', check: 'فحص',
+    js_warn: 'بيئة JavaScript غير متاحة.', keep_video: 'الاحتفاظ بالفيديو بعد الاستعادة', cookies: 'ملفات تعريف الارتباط للمتصفح',
+    run_h: 'حالة المهمة', idle_hint: 'ابدأ مهمة لمتابعة التقدم من هنا.', log: 'عرض سجل العمليات',
+    b_idle: 'في الانتظار', b_running: 'قيد التشغيل', b_done: 'اكتملت', b_error: 'خطأ', b_cancelled: 'أُلغيت',
+    btn_cancel: 'إلغاء المهمة', btn_cancelling: 'جارٍ الإلغاء…', elapsed: 'المنقضي', eta: 'المتبقي',
+    chip_ffmpeg_ok: 'FFmpeg جاهز {v}', chip_ffmpeg_bad: 'FFmpeg غير متاح', chip_js_ok: '{name} جاهز', chip_js_bad: 'JavaScript غير متاح', chip_yt: 'yt-dlp {v}',
+    def: 'افتراضي', nsym_0: 'بدون', cookies_none: 'بدون', checking: 'جارٍ الفحص…',
+    file_err_none: 'اختر ملفاً أولاً.', pw_empty: 'أدخل كلمة مرور للمتابعة.', e_url_missing: 'أدخل رابط الفيديو أولاً.', e_unexpected: 'حدث خطأ غير متوقع.',
+    est: 'المدة التقريبية: {dur} · الإطارات: {frames} · الزيادة: {ovh}%', est_big: 'قد يشغل الناتج {gb} GB تقريباً.',
+    q_ready: 'جودة 4K جاهزة', q_wait: 'الجودة المتاحة: {h}p', q_note_wait: 'قد تحتاج المعالجة إلى مزيد من الوقت.',
+    e_title: 'تعذّرت إكمال المهمة', video_kept: 'تم الاحتفاظ بالفيديو.', r_enc_h: 'اكتمل التحويل', r_ok_h: 'اكتملت الاستعادة', r_bad_h: 'تعذّر التحقق',
+    r_size: 'الحجم', r_dur: 'المدة', r_frames: 'الإطارات', r_time: 'الوقت', r_file: 'الملف', r_fixed: 'الأخطاء المصححة', r_sha: 'البصمة',
+    r_enc_tip: 'احتفظ بالفيديو لاستعادة الملف لاحقاً.', r_bad_tip: 'قد يكون الملف الناتج تالفاً.', open_folder: 'فتح المجلد', play: 'تشغيل', copy: 'نسخ', copied: 'تم النسخ',
+    s_encode_prepare: 'تجهيز الملف', s_encode_encode: 'تحويل البيانات', s_encode_finalize: 'إنهاء الفيديو',
+    s_restore_download: 'تجهيز المصدر', s_restore_decode: 'استعادة البيانات', s_restore_verify: 'التحقق من الملف'
+  },
+  en: {
+    tagline: 'Turn files into video. Recover them anytime.', lang_btn: 'العربية',
+    tab_encode: 'Encode to video', tab_restore: 'Restore files',
+    enc_file_h: 'File to encode', drop_file: 'Drag and drop your file here', drop_video: 'Drag and drop a video here',
+    or: 'or', browse: 'Browse files', change: 'Change', remove: 'Remove', out_h: 'Output video', out_dir: 'Output folder',
+    sec_pw: 'Security & settings', pw_toggle: 'Protect file with a password', pw_ph: 'Enter a password', show_hide: 'Show / hide',
+    pw_hint_enc: 'You will need this password to restore the file.', pw_hint_rs: 'Enter the password used when encoding.',
+    adv_h: 'Advanced settings', block_l: 'Block size', block_h: 'The data size of each block.', nsym_l: 'Error correction', nsym_h: 'More correction improves damage resistance.',
+    btn_encode: 'Start encoding', btn_restore: 'Start restoring', enc_note: 'Processing takes place locally on your device.',
+    src_h: 'Video source', src_url: 'Video link', src_file: 'Local file', url_ph: 'https://...', paste: 'Paste', check: 'Check',
+    js_warn: 'No JavaScript runtime is available.', keep_video: 'Keep video after restoring', cookies: 'Browser cookies',
+    run_h: 'Job status', idle_hint: 'Start a job to monitor its progress here.', log: 'View activity log',
+    b_idle: 'Standing by', b_running: 'Running', b_done: 'Complete', b_error: 'Error', b_cancelled: 'Cancelled',
+    btn_cancel: 'Cancel job', btn_cancelling: 'Cancelling…', elapsed: 'Elapsed', eta: 'Remaining',
+    chip_ffmpeg_ok: 'FFmpeg ready {v}', chip_ffmpeg_bad: 'FFmpeg unavailable', chip_js_ok: '{name} ready', chip_js_bad: 'JavaScript unavailable', chip_yt: 'yt-dlp {v}',
+    def: 'default', nsym_0: 'None', cookies_none: 'None', checking: 'Checking…',
+    file_err_none: 'Choose a file first.', pw_empty: 'Enter a password to continue.', e_url_missing: 'Enter a video link first.', e_unexpected: 'Something went wrong.',
+    est: 'Estimated duration: {dur} · frames: {frames} · overhead: {ovh}%', est_big: 'Output may be about {gb} GB.',
+    q_ready: '4K ready', q_wait: 'Available quality: {h}p', q_note_wait: 'Processing may take longer.',
+    e_title: 'The job could not be completed', video_kept: 'The video was kept.', r_enc_h: 'Encoding complete', r_ok_h: 'Restore complete', r_bad_h: 'Verification failed',
+    r_size: 'Size', r_dur: 'Duration', r_frames: 'Frames', r_time: 'Time', r_file: 'File', r_fixed: 'Errors corrected', r_sha: 'Hash',
+    r_enc_tip: 'Keep the video to restore the file later.', r_bad_tip: 'The resulting file may be damaged.', open_folder: 'Open folder', play: 'Play', copy: 'Copy', copied: 'Copied',
+    s_encode_prepare: 'Prepare file', s_encode_encode: 'Encode data', s_encode_finalize: 'Finalize video',
+    s_restore_download: 'Prepare source', s_restore_decode: 'Restore data', s_restore_verify: 'Verify file'
+  }
+};
+
+/* This mock is only for the static preview; it never reads or writes user files. */
+if (!window.pywebview) {
+  (() => {
+    let settings = {}, job = null, nextId = 0;
+    const makeJob = (kind, options) => {
+      job = { id: ++nextId, kind, options, started: Date.now(), cancelled: false };
+      return { ok: true, id: job.id };
+    };
+    const api = {
+      get_settings: async () => settings,
+      set_settings: async patch => { Object.assign(settings, patch); return true; },
+      get_info: async () => ({ ffmpeg: true, ffmpeg_version: '7.1', js_runtime: 'Node.js', ytdlp: '2026.1' }),
+      pick_file: async kind => kind === 'video' ? 'C:\\Users\\User\\Videos\\archive.mp4' : 'C:\\Users\\User\\Documents\\archive.zip',
+      pick_save: async () => 'C:\\Users\\User\\Videos\\archive.mp4',
+      pick_folder: async () => 'C:\\Users\\User\\Downloads',
+      file_info: async path => ({ ok: true, path, name: path.split(/[\\/]/).pop(), size: 48313958, default_out: 'C:\\Users\\User\\Videos\\archive.mp4' }),
+      estimate: async () => ({ seconds: 175, frames: 5250, overhead_pct: 18 }),
+      check_url: async () => ({ ok: true, title: 'Archive video', channel: 'YtDisk', duration: 175, has_4k: true }),
+      start_encode: async options => makeJob('encode', options),
+      start_restore: async options => makeJob('restore', options),
+      cancel: async () => { if (job) job.cancelled = true; return true; },
+      reveal: async () => true, open_path: async () => true,
+      poll: async (next, id) => {
+        if (!job || (id && id !== job.id)) return { job: null };
+        const elapsed = Math.max(0, (Date.now() - job.started) / 1000);
+        const percent = Math.min(100, elapsed / 15 * 100);
+        const status = job.cancelled ? 'cancelled' : percent >= 100 ? 'done' : 'running';
+        const ids = job.kind === 'encode' ? ['prepare', 'encode', 'finalize'] : ['download', 'decode', 'verify'];
+        const stages = ids.map((stage, i) => {
+          const frac = Math.max(0, Math.min(1, (percent - i * (100 / 3)) / (100 / 3)));
+          return { id: stage, frac, state: percent >= 100 || frac >= 1 ? 'done' : frac > 0 ? 'active' : 'pending' };
+        });
+        return { job: {
+          id: job.id, kind: job.kind, status, percent, stages, elapsed,
+          eta: status === 'running' ? Math.max(0, 15 - elapsed) : null,
+          extra: status === 'running' ? { total: 48313958, done: Math.round(48313958 * percent / 100), speed: 3200000 } : {},
+          log_next: next || 0, logs: [],
+          result: status === 'done' ? (job.kind === 'encode'
+            ? { video_bytes: 89313958, video_seconds: 175, frames: 5250, elapsed, out: job.options.output || 'C:\\Users\\User\\Videos\\archive.mp4' }
+            : { ok: true, size: 48313958, fixed: 0, elapsed, sha: 'bd8a40bc7b1a3d9672ab0c6e', out: 'C:\\Users\\User\\Downloads\\archive.zip' }) : null,
+          error: null
+        } };
+      }
+    };
+    window.pywebview = { api };
+  })();
+}

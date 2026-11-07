@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>YtDisk</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+<header class="top">
+  <div class="brand">
+    <span class="mark" aria-hidden="true"></span>
+    <div><h1>YtDisk</h1><p data-i18n="tagline"></p></div>
+  </div>
+  <div class="top-end">
+    <div id="chips" class="chips"></div>
+    <button id="sfxBtn" class="btn glass sm" type="button" aria-label="Toggle sound effects" aria-pressed="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="sfx-on" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/><path class="sfx-off" d="m16 9 5 6m0-6-5 6"/></svg>
+    </button>
+    <button id="themeBtn" class="btn glass sm" type="button" aria-label="تفعيل الوضع الليلي" aria-pressed="false">
+      <svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></svg>
+      <svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.3 15.4A8.5 8.5 0 0 1 8.6 3.7 8.5 8.5 0 1 0 20.3 15.4z"/></svg>
+    </button>
+    <button id="langBtn" class="btn glass sm" type="button"></button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-tab="encode" role="tab" type="button" data-i18n="tab_encode"></button>
+  <button class="tab" data-tab="restore" role="tab" type="button" data-i18n="tab_restore"></button>
+</nav>
+
+<main>
+  <!-- ============ ENCODE ============ -->
+  <section id="tab-encode" class="pane active">
+    <div class="col">
+      <div class="card">
+        <h2 data-i18n="enc_file_h"></h2>
+        <div id="encDrop" class="drop">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+          <p data-i18n="drop_file"></p>
+          <span class="or" data-i18n="or"></span>
+          <button id="encBrowse" class="btn" type="button" data-i18n="browse"></button>
+        </div>
+        <div id="encFile" class="filebox" hidden>
+          <div class="fmeta"><strong id="encName"></strong><span id="encSize"></span></div>
+          <div class="factions">
+            <button id="encChange" class="btn glass sm" type="button" data-i18n="change"></button>
+            <button id="encRemove" class="btn glass sm" type="button" data-i18n="remove"></button>
+          </div>
+        </div>
+        <h2 class="sub" data-i18n="out_h"></h2>
+        <div class="row">
+          <input id="encOut" class="grow" type="text" readonly dir="ltr">
+          <button id="encOutBtn" class="btn glass sm" type="button" data-i18n="change"></button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 data-i18n="sec_pw"></h2>
+        <label class="check"><input id="encPwToggle" type="checkbox"><span data-i18n="pw_toggle"></span></label>
+        <div id="encPwBox" class="pwbox" hidden>
+          <div class="row">
+            <input id="encPw" class="grow" type="password" autocomplete="off" data-i18n-ph="pw_ph" dir="ltr">
+            <button id="encPwShow" class="btn glass sm" type="button" data-i18n="show_hide"></button>
+          </div>
+          <p class="hint" data-i18n="pw_hint_enc"></p>
+        </div>
+        <details class="adv">
+          <summary data-i18n="adv_h"></summary>
+          <label class="field"><span data-i18n="block_l"></span><select id="encBlock"></select><small data-i18n="block_h"></small></label>
+          <label class="field"><span data-i18n="nsym_l"></span><select id="encNsym"></select><small data-i18n="nsym_h"></small></label>
+        </details>
+        <p id="encEstimate" class="estimate" aria-live="polite"></p>
+        <div class="msg err" id="encMsg" hidden></div>
+        <button id="encStart" class="btn primary wide" type="button" data-i18n="btn_encode"></button>
+        <p class="note" data-i18n="enc_note"></p>
+      </div>
+    </div>
+    <div class="col runmount"></div>
+  </section>
+
+  <!-- ============ RESTORE ============ -->
+  <section id="tab-restore" class="pane">
+    <div class="col">
+      <div class="card">
+        <h2 data-i18n="src_h"></h2>
+        <div class="seg" role="group">
+          <button class="active" data-src="url" type="button" data-i18n="src_url"></button>
+          <button data-src="file" type="button" data-i18n="src_file"></button>
+        </div>
+
+        <div id="srcUrlBox">
+          <div class="row">
+            <input id="rsUrl" class="grow" type="text" dir="ltr" data-i18n-ph="url_ph" spellcheck="false">
+            <button id="rsPaste" class="btn glass sm" type="button" data-i18n="paste"></button>
+            <button id="rsCheck" class="btn sm" type="button" data-i18n="check"></button>
+          </div>
+          <div id="rsCheckOut" class="ytcard" hidden></div>
+          <p id="jsWarn" class="msg warn" hidden data-i18n="js_warn"></p>
+        </div>
+
+        <div id="srcFileBox" hidden>
+          <div id="rsDrop" class="drop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+            <p data-i18n="drop_video"></p>
+            <span class="or" data-i18n="or"></span>
+            <button id="rsBrowse" class="btn" type="button" data-i18n="browse"></button>
+          </div>
+          <div id="rsFile" class="filebox" hidden>
+            <div class="fmeta"><strong id="rsName"></strong><span id="rsSize"></span></div>
+            <div class="factions">
+              <button id="rsChange" class="btn glass sm" type="button" data-i18n="change"></button>
+              <button id="rsRemove" class="btn glass sm" type="button" data-i18n="remove"></button>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="sub" data-i18n="out_dir"></h2>
+        <div class="row">
+          <input id="rsOut" class="grow" type="text" readonly dir="ltr" placeholder="Downloads">
+          <button id="rsOutBtn" class="btn glass sm" type="button" data-i18n="browse"></button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 data-i18n="sec_pw"></h2>
+        <label class="check"><input id="rsPwToggle" type="checkbox"><span data-i18n="pw_toggle"></span></label>
+        <div id="rsPwBox" class="pwbox" hidden>
+          <div class="row">
+            <input id="rsPw" class="grow" type="password" autocomplete="off" data-i18n-ph="pw_ph" dir="ltr">
+            <button id="rsPwShow" class="btn glass sm" type="button" data-i18n="show_hide"></button>
+          </div>
+          <p class="hint" data-i18n="pw_hint_rs"></p>
+        </div>
+        <details class="adv">
+          <summary data-i18n="adv_h"></summary>
+          <label class="check"><input id="rsKeep" type="checkbox"><span data-i18n="keep_video"></span></label>
+          <label class="field"><span data-i18n="cookies"></span><select id="rsBrowser"></select></label>
+        </details>
+        <div class="msg err" id="rsMsg" hidden></div>
+        <button id="rsStart" class="btn primary wide" type="button" data-i18n="btn_restore"></button>
+      </div>
+    </div>
+    <div class="col runmount"></div>
+  </section>
+</main>
+
+<template id="runTpl">
+  <div class="card run" data-state="idle">
+    <div class="run-head">
+      <h2 data-i18n="run_h"></h2>
+      <span class="badge" data-role="badge" data-state="idle"></span>
+    </div>
+    <div class="ring" data-role="fill"><div class="ring-in"><span data-role="pct">0%</span></div></div>
+    <p class="idle-hint" data-role="hint" data-i18n="idle_hint"></p>
+    <ul class="stages" data-role="stages"></ul>
+    <div class="times">
+      <span data-role="elapsed"></span><span data-role="eta"></span><span data-role="extra"></span>
+    </div>
+    <button class="btn danger wide" data-role="cancel" type="button" hidden></button>
+    <div class="msg err" data-role="error" hidden></div>
+    <div class="result" data-role="result" hidden></div>
+    <details class="logbox"><summary data-i18n="log"></summary><pre data-role="log" dir="ltr"></pre></details>
+  </div>
+</template>
+
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+<script src="fx.js"></script>
+</body>
+</html>

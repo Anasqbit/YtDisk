@@ -1,0 +1,243 @@
+# ---------- selectable UIs (UI folders are never modified; the app just loads the chosen folder) ----------
+# Every design has its own name, character, icon and switcher look. The switcher button is created with the
+# page's own ".btn glass sm" classes, so it is drawn exactly like that design's native buttons; SWITCH_CSS only
+# dresses the dropdown so it matches that design's panels. To add a design: add an entry here + a SWITCH_CSS entry.
+UIS = {
+    "default": {"dir": "ui", "icon": "foundry",
+                "ar": "المصنع", "en": "Foundry",
+                "ar_d": "معدن غرافيت، مصابيح كهرمانية، أزرار ميكانيكية",
+                "en_d": "Graphite metal, amber lamps, mechanical keys",
+                "sw": ["#202728", "#f4a947", "#7fdda7"]},
+    "design1": {"dir": "ui desien/desien 1", "icon": "aurora",
+                "ar": "الشفق", "en": "Aurora",
+                "ar_d": "زجاج شفاف وأضواء قطبية متحركة",
+                "en_d": "Frosted glass and drifting aurora light",
+                "sw": ["#171c3f", "#6f8dff", "#b57bff"]},
+    "design2": {"dir": "ui desien/desien 2", "icon": "analog",
+                "ar": "أنالوج", "en": "Analog",
+                "ar_d": "ورق كريمي ولوحة أجهزة كلاسيكية، نهاري وليلي",
+                "en_d": "Cream paper and a vintage instrument panel, day & night",
+                "sw": ["#eeeee3", "#ee7950", "#96bd79"]},
+}
+DEFAULT_UI = "default"
+
+ICONS = {
+    "foundry": '<path d="M12 3l7.8 4.5v9L12 21l-7.8-4.5v-9z"/><circle cx="12" cy="12" r="3"/>',
+    "aurora": '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>'
+              '<path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/>',
+    "analog": '<circle cx="12" cy="12" r="8"/><path d="M12 12l3.6-3.6"/><path d="M12 4.5V6M19.5 12H18M4.5 12H6"/>',
+}
+
+
+def ui_index(ui_id: str) -> Path:
+    return Path(resource_path(UIS[ui_id]["dir"])) / "index.html"
+
+
+# "§" is replaced by the switcher root selector.
+SWITCH_CSS_COMMON = r"""
+header.top{z-index:60}
+§{position:relative;display:inline-flex;flex:none}
+§.usw-float{position:fixed;top:14px;inset-inline-end:14px;z-index:2147483000}
+§ .usw-btn{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+§ .usw-btn svg{width:16px;height:16px;flex:none}
+§ .usw-menu{position:absolute;top:calc(100% + 12px);inset-inline-end:0;z-index:70;display:none;box-sizing:border-box;
+  width:300px;max-width:calc(100vw - 32px);padding:8px;text-align:start;font:13px/1.35 "Segoe UI",Tahoma,Arial,sans-serif}
+§.open .usw-menu{display:block;animation:usw-in .22s cubic-bezier(.2,.9,.3,1) both}
+@keyframes usw-in{from{opacity:0;transform:translateY(-8px) scale(.97)}}
+§ .usw-head{font-weight:700}
+§ .usw-it{display:grid;grid-template-columns:48px minmax(0,1fr) 18px;align-items:center;gap:12px;box-sizing:border-box;
+  width:100%;margin:0;padding:9px 10px;border:1px solid transparent;background:none;color:inherit;font:inherit;text-align:start;cursor:pointer}
+§ .usw-it + .usw-it{margin-top:6px}
+§ .usw-sw{position:relative;display:block;width:48px;height:34px;overflow:hidden;background:var(--c0)}
+§ .usw-sw i{position:absolute;width:13px;height:13px;border-radius:50%}
+§ .usw-sw i:nth-child(1){top:6px;inset-inline-start:7px;background:var(--c1)}
+§ .usw-sw i:nth-child(2){bottom:6px;inset-inline-end:7px;background:var(--c2)}
+§ .usw-tx{display:flex;flex-direction:column;min-width:0}
+§ .usw-nm{font-size:14px}
+§ .usw-ds{font-size:11.5px;line-height:1.35}
+§ .usw-ck{width:12px;height:12px;border-radius:50%;justify-self:center}
+§ .usw-toast{position:absolute;top:calc(100% + 10px);inset-inline-end:0;z-index:71;display:none;white-space:nowrap;padding:8px 12px;
+  border-radius:8px;border:1px solid #78483e;background:#3b211c;color:#ffd9d2;font:12px "Segoe UI",Tahoma,sans-serif}
+§ .usw-toast.show{display:block}
+"""
+
+SWITCH_CSS = {
+    # Foundry: graphite panel, keycap-style rows, amber indicator lamp
+    "default": r"""
+§ .usw-menu{border:1px solid #485354;border-radius:13px;color:#e4e9e8;
+  background:linear-gradient(155deg,rgba(255,255,255,.055),transparent 27%),
+    repeating-linear-gradient(176deg,rgba(255,255,255,.012) 0 1px,transparent 1px 5px),linear-gradient(145deg,#293233,#202728 54%,#1b2223);
+  box-shadow:0 4px 0 #111718,0 18px 34px rgba(0,0,0,.5),inset 0 1px 1px rgba(255,255,255,.16)}
+§ .usw-head{padding:5px 8px 10px;color:#91a09f;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
+§ .usw-it{border-color:#596463;border-radius:8px;
+  background:linear-gradient(155deg,rgba(255,255,255,.1),transparent 40%),linear-gradient(#384142,#293132);
+  box-shadow:0 1px 0 #6b7673,0 3px 0 #171d1e,inset 0 1px rgba(255,255,255,.14);transition:transform .12s,box-shadow .12s,filter .15s}
+§ .usw-it:hover{filter:brightness(1.12)}
+§ .usw-it:active{transform:translateY(3px);box-shadow:0 0 0 #171d1e,inset 0 2px 5px rgba(0,0,0,.4)}
+§ .usw-it.cur{border-color:#8a6a35}
+§ .usw-sw{border:1px solid #0d1213;border-radius:5px;box-shadow:inset 0 1px 3px rgba(0,0,0,.6)}
+§ .usw-nm{font-weight:700;color:#e4e9e8}
+§ .usw-ds{color:#91a09f}
+§ .usw-ck{background:#10161a;box-shadow:inset 0 1px 3px #000,0 1px 0 rgba(255,255,255,.12)}
+§ .usw-it.cur .usw-ck{background:#ffd17a;box-shadow:0 0 8px 2px rgba(244,169,71,.7)}
+""",
+    # Aurora: frosted glass, soft glow, gradient selection
+    "design1": r"""
+§ .usw-menu{border:1px solid rgba(255,255,255,.18);border-radius:22px;color:#f3f5ff;
+  background:linear-gradient(145deg,rgba(62,68,134,.62),rgba(20,22,52,.84));
+  backdrop-filter:blur(26px) saturate(160%);-webkit-backdrop-filter:blur(26px) saturate(160%);
+  box-shadow:0 26px 64px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.24)}
+§ .usw-head{padding:6px 12px 8px;color:rgba(236,239,255,.62);font-size:12px}
+§ .usw-it{border-radius:16px;transition:background .25s,transform .25s,box-shadow .25s}
+§ .usw-it:hover{background:rgba(255,255,255,.1);transform:translateY(-1px)}
+§ .usw-it:active{transform:scale(.97)}
+§ .usw-it.cur{background:linear-gradient(120deg,rgba(111,141,255,.42),rgba(181,123,255,.36));
+  box-shadow:0 8px 24px rgba(130,120,255,.32),inset 0 1px 0 rgba(255,255,255,.3)}
+§ .usw-sw{border-radius:12px;border:1px solid rgba(255,255,255,.22);box-shadow:0 6px 16px rgba(0,0,0,.3)}
+§ .usw-sw i{filter:blur(3px);width:20px;height:20px;opacity:.95}
+§ .usw-nm{font-weight:700}
+§ .usw-ds{color:rgba(236,239,255,.62)}
+§ .usw-ck{border:1.5px solid rgba(255,255,255,.35)}
+§ .usw-it.cur .usw-ck{border-color:transparent;background:linear-gradient(120deg,#6f8dff,#b57bff);box-shadow:0 0 12px rgba(130,120,255,.8)}
+""",
+    # Analog: cream instrument panel with pressed-in selection and orange lamp (day + night)
+    "design2": r"""
+§ .usw-menu{border:1px solid #8b9583;border-radius:9px;color:#202e25;
+  background:linear-gradient(180deg,#f1f2e9,#d9ddd0);
+  box-shadow:inset 0 1px rgba(255,255,255,.9),0 3px 0 #7a8474,0 7px 0 #111c16,0 16px 26px rgba(0,0,0,.35)}
+§ .usw-head{margin-bottom:6px;padding:5px 8px 9px;border-bottom:1px solid #b7bbae;box-shadow:0 1px rgba(255,255,255,.7);
+  color:#687466;font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+§ .usw-it{border-color:#a9b1a0;border-radius:6px;background:linear-gradient(180deg,#f7f8f0,#e1e5d8);
+  box-shadow:inset 0 1px #fff,0 2px 0 #9aa391;transition:transform .12s,box-shadow .12s,background .15s}
+§ .usw-it:hover{background:linear-gradient(180deg,#fff,#ebeee2)}
+§ .usw-it:active{transform:translateY(2px);box-shadow:inset 0 2px 4px rgba(0,0,0,.2)}
+§ .usw-it.cur{border-color:#8b9583;background:#cfd5c8;box-shadow:inset 0 3px 6px rgba(39,54,42,.25),0 1px rgba(255,255,255,.8)}
+§ .usw-sw{border:1px solid #6d7968;border-radius:4px;box-shadow:inset 0 2px 4px rgba(0,0,0,.25)}
+§ .usw-nm{font-weight:800;color:#202e25}
+§ .usw-ds{color:#687466}
+§ .usw-ck{background:#b9bfae;box-shadow:inset 0 2px 3px rgba(0,0,0,.35),0 1px rgba(255,255,255,.8)}
+§ .usw-it.cur .usw-ck{background:#ee7950;box-shadow:0 0 8px 2px rgba(238,121,80,.65),inset 0 1px rgba(255,255,255,.5)}
+html[data-theme='night'] § .usw-menu{border-color:#405047;color:#dce6d9;background:linear-gradient(180deg,#344139,#222e27);
+  box-shadow:inset 0 1px rgba(255,255,255,.08),0 3px 0 #18221d,0 7px 0 #050a07,0 16px 28px rgba(0,0,0,.5)}
+html[data-theme='night'] § .usw-head{border-bottom-color:#445349;box-shadow:0 1px rgba(255,255,255,.04);color:#93a297}
+html[data-theme='night'] § .usw-it{border-color:#526359;background:linear-gradient(180deg,#46564c,#2e3d34);color:#e0e9df;
+  box-shadow:inset 0 1px rgba(255,255,255,.12),0 2px 0 #18221d}
+html[data-theme='night'] § .usw-it:hover{background:linear-gradient(180deg,#506256,#35463c)}
+html[data-theme='night'] § .usw-it.cur{background:#19271f;border-color:#405349;box-shadow:inset 0 3px 6px rgba(0,0,0,.5),0 1px rgba(255,255,255,.05)}
+html[data-theme='night'] § .usw-nm{color:#eef4ea}
+html[data-theme='night'] § .usw-ds{color:#93a297}
+html[data-theme='night'] § .usw-ck{background:#17251c;box-shadow:inset 0 2px 3px rgba(0,0,0,.6),0 1px rgba(255,255,255,.06)}
+html[data-theme='night'] § .usw-it.cur .usw-ck{background:#fa9b6c;box-shadow:0 0 9px 2px rgba(250,155,108,.6)}
+""",
+}
+
+# Native-looking design picker, injected into the header of whichever UI is loaded (after every page load).
+SWITCHER_JS = r"""
+(function () {
+  if (document.getElementById('__uiSwitch')) return;
+  var UIS = __UIS__, CUR = __CUR__, CSS = __CSS__, ICONS = __ICONS__;
+  var TITLE = {ar: 'تغيير التصميم', en: 'Change design'};
+  var BUSY = {ar: 'أنهِ العملية الحالية أولاً', en: 'Finish the current task first'};
+  var FAIL = {ar: 'تعذّر تغيير التصميم', en: 'Could not switch design'};
+  var st = document.createElement('style');
+  st.id = '__uiSwitchCss'; st.textContent = CSS; document.head.appendChild(st);
+  function icon(n) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" ' +
+           'stroke-linejoin="round" aria-hidden="true" focusable="false">' + (ICONS[n] || '') + '</svg>';
+  }
+  var cur = UIS.filter(function (u) { return u.id === CUR; })[0] || UIS[0];
+  var host = document.createElement('div');
+  host.id = '__uiSwitch';
+  host.innerHTML =
+    '<button type="button" class="btn glass sm usw-btn" aria-haspopup="true" aria-expanded="false">' +
+      icon(cur.icon) + '<span class="usw-cur"></span></button>' +
+    '<div class="usw-menu" role="menu"><div class="usw-head"></div>' +
+      UIS.map(function (u) {
+        return '<button type="button" class="usw-it" role="menuitemradio" data-ui="' + u.id + '" ' +
+          'style="--c0:' + u.sw[0] + ';--c1:' + u.sw[1] + ';--c2:' + u.sw[2] + '">' +
+          '<span class="usw-sw"><i></i><i></i></span>' +
+          '<span class="usw-tx"><b class="usw-nm"></b><small class="usw-ds"></small></span>' +
+          '<span class="usw-ck" aria-hidden="true"></span></button>';
+      }).join('') +
+    '</div><div class="usw-toast" role="status"></div>';
+  var end = document.querySelector('.top-end'), lb = document.getElementById('langBtn');
+  if (end) end.insertBefore(host, lb && lb.parentNode === end ? lb : null);
+  else { host.className = 'usw-float'; document.body.appendChild(host); }
+
+  var btn = host.querySelector('.usw-btn'), menu = host.querySelector('.usw-menu'), toastEl = host.querySelector('.usw-toast');
+  var items = Array.prototype.slice.call(host.querySelectorAll('.usw-it'));
+  function lang() { return (document.documentElement.lang || 'ar').toLowerCase().indexOf('en') === 0 ? 'en' : 'ar'; }
+  function find(id) { return UIS.filter(function (x) { return x.id === id; })[0]; }
+  function refresh() {
+    var l = lang();
+    btn.title = TITLE[l];
+    host.querySelector('.usw-cur').textContent = cur[l];
+    host.querySelector('.usw-head').textContent = TITLE[l];
+    items.forEach(function (it) {
+      var u = find(it.dataset.ui);
+      it.querySelector('.usw-nm').textContent = u[l];
+      it.querySelector('.usw-ds').textContent = u[l + '_d'];
+      it.classList.toggle('cur', u.id === CUR);
+      it.setAttribute('aria-checked', u.id === CUR ? 'true' : 'false');
+    });
+  }
+  function setOpen(v) {
+    host.classList.toggle('open', v);
+    btn.setAttribute('aria-expanded', v ? 'true' : 'false');
+    if (v) toastEl.classList.remove('show');
+  }
+  var tt = null;
+  function toast(msg) {
+    toastEl.textContent = msg; toastEl.classList.add('show'); setOpen(false);
+    clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove('show'); }, 2600);
+  }
+  btn.addEventListener('click', function (e) { e.stopPropagation(); setOpen(!host.classList.contains('open')); });
+  document.addEventListener('click', function (e) { if (!host.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+  items.forEach(function (it) {
+    it.addEventListener('click', function () {
+      if (it.dataset.ui === CUR) { setOpen(false); return; }
+      var api = window.pywebview && window.pywebview.api;
+      if (!api || !api.set_ui) { toast(FAIL[lang()]); return; }
+      api.set_ui(it.dataset.ui).then(function (r) {
+        if (r && r.ok) setOpen(false);
+        else toast((r && r.code === 'busy' ? BUSY : FAIL)[lang()]);
+      }, function () { toast(FAIL[lang()]); });
+    });
+  });
+  new MutationObserver(refresh).observe(document.documentElement, {attributes: true, attributeFilter: ['lang']});
+  refresh();
+})();
+"""
+
+# Used by --selftest: proves the switcher button is drawn with the design's own button style and the menu is usable.
+SWITCH_PROBE = r"""
+(function () {
+  var h = document.getElementById('__uiSwitch'); if (!h) return 'MISSING';
+  var b = h.querySelector('.usw-btn'), l = document.getElementById('langBtn');
+  var cb = getComputedStyle(b), cl = getComputedStyle(l);
+  var same = cb.borderRadius === cl.borderRadius && cb.borderTopColor === cl.borderTopColor &&
+             cb.fontFamily === cl.fontFamily && cb.color === cl.color;
+  b.click();
+  var m = h.querySelector('.usw-menu'), r = m.getBoundingClientRect();
+  var inside = r.left >= -1 && r.right <= innerWidth + 1 && r.top >= -1 && r.bottom <= innerHeight + 1;
+  var pt = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+  var onTop = !!pt && h.contains(pt);
+  var names = [].map.call(h.querySelectorAll('.usw-it'), function (i) { return i.querySelector('.usw-nm').textContent; });
+  b.click();
+  return JSON.stringify({label: b.innerText.trim(), sameStyleAsLangBtn: same, menuInsideWindow: inside,
+                         menuOnTop: onTop, items: names, closedAgain: getComputedStyle(m).display === 'none'});
+})()
+"""
+
+
+def switcher_js(cur: str) -> str:
+    uis = [{"id": k, "ar": v["ar"], "en": v["en"], "ar_d": v["ar_d"], "en_d": v["en_d"], "icon": v["icon"], "sw": v["sw"]}
+           for k, v in UIS.items() if ui_index(k).is_file()]
+    css = (SWITCH_CSS_COMMON + SWITCH_CSS.get(cur, "")).replace("§", "#__uiSwitch")
+    return (SWITCHER_JS.replace("__UIS__", json.dumps(uis, ensure_ascii=False))
+            .replace("__CUR__", json.dumps(cur))
+            .replace("__ICONS__", json.dumps(ICONS))
+            .replace("__CSS__", json.dumps(css, ensure_ascii=False)))
+
+
